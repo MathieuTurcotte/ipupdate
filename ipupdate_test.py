@@ -5,9 +5,9 @@
 
 # python3 -m unittest -v ipupdate_test.py
 
+from unittest import mock
 import io
 import logging
-import mock
 import time
 import unittest
 import urllib.request
