@@ -32,7 +32,7 @@ def install_config(config_file):
 
 
 def install_service():
-    if exists('/etc/fedora-release'):
+    if exists("/etc/fedora-release"):
         put("systemd/ipupdate.service",
             "/lib/systemd/system/ipupdate.service", use_sudo=True, mode=0644)
     else:
