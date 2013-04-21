@@ -18,12 +18,12 @@ def configure_logging():
     sudo("mkdir -p %s" % LOG_DIR)
     sudo("chown -R ipupdate:ipupdate %s" % LOG_DIR)
 
-def install_conf_file(config_file):
+def install_config(config_file):
     put(config_file, "%s/ipupdate.conf" % ETC_DIR, use_sudo=True, mode=0644)
     sudo("chown ipupdate:ipupdate %s/ipupdate.conf" % ETC_DIR)
 
-def install_init_script(is_fedora):
-    if is_fedora:
+def install_service():
+    if exists('/etc/fedora-release'):
         put("systemd/ipupdate.service", "/lib/systemd/system/ipupdate.service", use_sudo=True, mode=0644)
     else:
         put("upstart/ipupdate.conf", "/etc/init/ipupdate.conf", use_sudo=True, mode=0644)
@@ -33,9 +33,8 @@ def install_script():
 
 @task()
 def install(config_file):
-    is_fedora = exists('/etc/fedora-release')
     add_user("ipupdate")
-    install_conf_file(config_file)
-    install_init_script(is_fedora)
-    configure_logging()
     install_script()
+    install_config(config_file)
+    configure_logging()
+    install_service()
