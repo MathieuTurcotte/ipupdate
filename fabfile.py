@@ -6,21 +6,25 @@ from fabric.utils import *
 from fabric.colors import *
 from fabric.contrib.files import exists
 
+USER="ipupdate"
 LOG_DIR="/var/log/ipupdate"
 ETC_DIR="/usr/local/etc"
 BIN_DIR="/usr/local/bin"
 
-def add_user(username):
+def chown(path):
+    sudo("chown -R %s:%s %s" % (USER, USER, path))
+
+def add_user():
     with settings(hide("warnings"), warn_only=True):
-        sudo('adduser --system --no-create-home %s' % username)
+        sudo('adduser --system --no-create-home %s' % USER)
 
 def configure_logging():
     sudo("mkdir -p %s" % LOG_DIR)
-    sudo("chown -R ipupdate:ipupdate %s" % LOG_DIR)
+    chown(LOG_DIR)
 
 def install_config(config_file):
     put(config_file, "%s/ipupdate.conf" % ETC_DIR, use_sudo=True, mode=0644)
-    sudo("chown ipupdate:ipupdate %s/ipupdate.conf" % ETC_DIR)
+    chown("%s/ipupdate.conf" % ETC_DIR)
 
 def install_service():
     if exists('/etc/fedora-release'):
@@ -33,7 +37,7 @@ def install_script():
 
 @task()
 def install(config_file):
-    add_user("ipupdate")
+    add_user()
     install_script()
     install_config(config_file)
     configure_logging()
