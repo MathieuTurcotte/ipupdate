@@ -1,0 +1,11 @@
+[Unit]
+Description="Dyn DNS updater"
+After=syslog.target
+
+[Service]
+ExecStart=/usr/local/bin/ipupdate.py -l info /usr/local/etc/ipupdate.conf
+Restart=on-abort
+User=ipupdate
+
+[Install]
+WantedBy=multi-user.target
