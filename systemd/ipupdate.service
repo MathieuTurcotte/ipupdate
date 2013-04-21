@@ -3,9 +3,9 @@ Description="Dyn DNS updater"
 After=syslog.target
 
 [Service]
-ExecStart=/usr/local/bin/ipupdate.py -l info /usr/local/etc/ipupdate.conf
+ExecStart=%(bin_dir)s/ipupdate.py -l info %(etc_dir)s/ipupdate.conf
 Restart=on-abort
-User=ipupdate
+User=%(user)s
 
 [Install]
 WantedBy=multi-user.target

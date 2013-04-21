@@ -4,7 +4,7 @@
 from fabric.api import *
 from fabric.utils import *
 from fabric.colors import *
-from fabric.contrib.files import exists
+from fabric.contrib.files import *
 
 USER = "ipupdate"
 LOG_DIR = "/var/log/ipupdate"
@@ -32,12 +32,25 @@ def install_config(config_file):
 
 
 def install_service():
+    context = {
+        "log_dir": LOG_DIR,
+        "bin_dir": BIN_DIR,
+        "etc_dir": ETC_DIR,
+        "user": USER,
+    }
+
     if exists("/etc/fedora-release"):
-        put("systemd/ipupdate.service",
-            "/lib/systemd/system/ipupdate.service", use_sudo=True, mode=0644)
+        src = "systemd/ipupdate.service"
+        dst = "/lib/systemd/system/ipupdate.service"
     else:
-        put("upstart/ipupdate.conf", "/etc/init/ipupdate.conf", use_sudo=True,
-            mode=0644)
+        src = "upstart/ipupdate.conf"
+        dst = "/etc/init/ipupdate.conf"
+
+    upload_template(src, dst,
+                    context=context,
+                    use_sudo=True,
+                    backup=False,
+                    mode=0644)
 
 
 def install_script():
