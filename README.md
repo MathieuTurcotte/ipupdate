@@ -5,6 +5,8 @@ your DynDNS records when it changes.
 
 ## Tests
 
+To run the unit tests, Python 3.3 or higher is required.
+
 ```
 python3 -m unittest -v ipupdate_test.py
 ```
