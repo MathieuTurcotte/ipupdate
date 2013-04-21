@@ -1,7 +1,8 @@
 # Dynamic IP address updater for DynDNS
 
 `ipupdate.py` is a daemon that monitor your external IP address and update
-your DynDNS records when it changes.
+your [DynDNS](http://dyn.com/) records when it changes. `ipupdate.py`
+requires Python 3.
 
 ## Usage
 
@@ -12,17 +13,19 @@ Options:
   -h, --help    show this help message and exit
   -d, --daemon  run as daemon
   -l LOG_LEVEL  log level (debug, info, warning, error, critical)
-
 ```
 
 ## Installing
 
-A fabric script is provided to install `ipupdate.py` as a daemon. It should
-work on modern Ubuntu and Fedora distributions.
+A [fabric](http://fabfile.org/) script is provided to install `ipupdate.py`
+as a daemon. It should work on modern Ubuntu and Fedora distributions.
 
 ```
 fab install:path/to/your/config -H localhost
 ```
+
+You can base your configuration file on the sample provided in the
+repository.
 
 ## Tests
 
