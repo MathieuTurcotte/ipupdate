@@ -14,12 +14,6 @@ def add_user(username):
     with settings(hide("warnings"), warn_only=True):
         sudo('adduser --system --no-create-home %s' % username)
 
-def install_python3(is_fedora):
-    if is_fedora:
-        sudo('yum --assumeyes install python3')
-    else:
-        sudo('apt-get --assume-yes install python3')
-
 def configure_logging():
     sudo("mkdir -p %s" % LOG_DIR)
     sudo("chown -R ipupdate:ipupdate %s" % LOG_DIR)
@@ -40,7 +34,6 @@ def install_script():
 @task()
 def install(config_file):
     is_fedora = exists('/etc/fedora-release')
-    install_python3(is_fedora)
     add_user("ipupdate")
     install_conf_file(config_file)
     install_init_script(is_fedora)
