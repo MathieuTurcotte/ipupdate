@@ -11,7 +11,8 @@ ETC_DIR="/usr/local/etc"
 BIN_DIR="/usr/local/bin"
 
 def add_user(username):
-    sudo('adduser --system --no-create-home %s' % username)
+    with settings(hide("warnings"), warn_only=True):
+        sudo('adduser --system --no-create-home %s' % username)
 
 def install_python3(is_fedora):
     if is_fedora:
