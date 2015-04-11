@@ -431,7 +431,6 @@ def main():
         ExternalIpLookupService("dyndns", "http://checkip.dyndns.org/", 720),
         ExternalIpLookupService("ifconfig", "http://ifconfig.me/ip", 300),
         ExternalIpLookupService("icanhazip", "http://icanhazip.com/", 300),
-        ExternalIpLookupService("externalip", "http://api.externalip.net/ip/", 300),
         ExternalIpLookupService("dnsomatic", "http://myip.dnsomatic.com/", 300)
     ])
 
