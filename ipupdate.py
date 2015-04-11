@@ -426,10 +426,7 @@ def main():
     dns_updater = DynUpdater(options.hosts, dns_service)
 
     ip_lookup_service_pool = ExternalIpLookupServicePool([
-        # It seems that under some circumstances, whatismyip returns a faulty
-        # IP address. Needs more investigation, but for the moment the safest
-        # solution is simply to disable it altogether.
-        # ExternalIpLookupService("whatismyip", "http://automation.whatismyip.com/n09230945.asp", 360),
+        ExternalIpLookupService("ipappspot", "http://ip.appspot.com/", 60),
         ExternalIpLookupService("easydns", "http://support.easydns.com/utils/get_ip.php", 360),
         ExternalIpLookupService("dyndns", "http://checkip.dyndns.org/", 720),
         ExternalIpLookupService("ifconfig", "http://ifconfig.me/ip", 300),
